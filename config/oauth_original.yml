@@ -1,0 +1,40 @@
+# please change filename oauth.yml from oauth_original.yml
+development:
+  twitter:
+    consumer_key: "xxxxxxxxxxxxx"
+    consumer_secret: "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+  facebook:
+    application_id: "xxxxxxxxxxxx"
+    api_key: "xxxxxxxxxxxxxxxxxxxxxxxx"
+    secret_key: "xxxxxxxxxxxxxxxxxxxxxxxx"
+    callback_url: "your_callback_url"
+  mixi:
+    consumer_key: "xxxxxxxxxxxxx"
+    consumer_secret: "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+
+test:
+  twitter:
+    consumer_key: "3333"
+    consumer_secret: "4444"
+  facebook:
+    application_id: "test"
+    api_key: "1111"
+    secret_key: "2222"
+    callback_url: "http://localhost:3000/facebook/callback"
+  mixi:
+    consumer_key: "xxxxxxxxxxxxx"
+    consumer_secret: "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+     
+production:
+  twitter:
+    consumer_key: "xxxxxxxxxxxxx"
+    consumer_secret: "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+  facebook:
+    application_id: "xxxxxxxxxxxx"
+    api_key: "xxxxxxxxxxxxxxxxxxxxxxxx"
+    secret_key: "xxxxxxxxxxxxxxxxxxxxxxxx"
+    callback_url: "your_callback_url"
+  mixi:
+    consumer_key: "xxxxxxxxxxxxx"
+    consumer_secret: "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+

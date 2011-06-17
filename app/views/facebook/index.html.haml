@@ -1,0 +1,15 @@
+%h1 Facebook#index
+
+- if session[:access_token]
+  %h2 My likes list
+  <table>
+  - @likes.each do |like|
+    <tr><td>
+    = Time.parse(like["created_time"]).strftime("%Y/%m/%d %H:%M")
+    </td><td> - 
+    = link_to like["name"], "http://www.facebook.com/pages/#{like["name"]}/#{like["id"]}"
+    </td></tr>
+  </table>
+- else
+  %p 
+    = link_to("OAuthで認証", facebook_oauth_path)
