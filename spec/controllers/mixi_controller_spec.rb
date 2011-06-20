@@ -15,7 +15,7 @@ describe MixiController do
   describe "GET 'auth'" do
     it "should be successful" do
       get 'auth'
-      response.should be_success
+      response.should be_redirect
     end
     it "matches get mixi_auth_path" do
       { :get => mixi_auth_path }.should route_to("mixi#auth")
@@ -25,7 +25,7 @@ describe MixiController do
   describe "GET 'callback'" do
     it "should be successful" do
       get 'callback'
-      response.should be_success
+      response.should be_redirect
     end
     it "matches get mixi_callback_path" do
       { :get => mixi_callback_path }.should route_to("mixi#callback")

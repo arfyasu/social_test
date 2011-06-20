@@ -16,8 +16,8 @@ class FacebookController < ApplicationController
 
   # 認証されている場合は、いいね一覧を取得する
   def index
-    if session[:access_token]
-      access_token = OAuth2::AccessToken.new(@@client, session[:access_token])
+    if session[:access_token_facebook]
+      access_token = OAuth2::AccessToken.new(@@client, session[:access_token_facebook])
       @likes = JSON.parse(access_token.get("/me/likes"))["data"]
     end
   end
@@ -37,7 +37,8 @@ class FacebookController < ApplicationController
         params[:code],
         :redirect_uri => "#{@facebook_settings['callback_url']}", 
       )
-      session[:access_token] = access_token.token if access_token
+#      p access_token
+      session[:access_token_facebook] = access_token.token if access_token
     end
     redirect_to facebook_path
   end

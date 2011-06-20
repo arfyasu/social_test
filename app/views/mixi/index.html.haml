@@ -1,2 +1,8 @@
 %h1 Mixi#index
-%p Find me in app/views/mixi/index.html.haml
+- if session[:access_token_mixi]
+  %h2 My profile
+  = image_tag @profile["thumbnailUrl"]
+  = link_to @profile["displayName"], @profile["profileUrl"]
+- else
+  %p 
+    = link_to("OAuthで認証", mixi_auth_path)

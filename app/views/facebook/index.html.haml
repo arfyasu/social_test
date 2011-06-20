@@ -1,6 +1,6 @@
 %h1 Facebook#index
 
-- if session[:access_token]
+- if session[:access_token_facebook]
   %h2 My likes list
   <table>
   - @likes.each do |like|

@@ -1,0 +1,7 @@
+%h1 Twitter#index
+- if session[:access_token_twitter]
+  %h2= @user_info['name'] + "'s Recent tweet"
+  = @user_info['status']['text']
+- else
+  %p 
+    = link_to("OAuthで認証", twitter_oauth_path)
