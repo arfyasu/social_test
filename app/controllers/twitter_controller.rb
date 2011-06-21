@@ -17,24 +17,11 @@ class TwitterController < ApplicationController
     if session[:access_token_twitter]
       response = @@consumer.request(
         :get,
-        '/account/verify_credentials.json',
         session[:access_token_twitter],
         { :scheme => :query_string }
       )
-      case response
-      when Net::HTTPSuccess
-        @user_info = JSON.parse(response.body)
-        unless @user_info['screen_name']
-          flash[:notice] = "Authentication failed"
-          redirect_to :action => :index
-          return
-        end
-      else
-        RAILS_DEFAULT_LOGGER.error "Failed to get user info via OAuth"
-        flash[:notice] = "Authentication failed"
-        redirect_to :action => :index
-        return
-      end
+      @user_info = JSON.parse(response.body)
+      flash[:notice] = "twitter access failed" unless @user_info['screen_name']
     end
   end
 

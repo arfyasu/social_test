@@ -17,8 +17,14 @@ class FacebookController < ApplicationController
   # 認証されている場合は、いいね一覧を取得する
   def index
     if session[:access_token_facebook]
-      access_token = OAuth2::AccessToken.new(@@client, session[:access_token_facebook])
-      @likes = JSON.parse(access_token.get("/me/likes"))["data"]
+      res = get_likes
+      if res.blank?
+        session.delete :access_token_facebook
+#        #TODO: 無限ループの可能性があるため検証の必要あり
+#        oauth
+        return
+      end
+      @likes = JSON.parse(res)["data"]
     end
   end
 
@@ -37,10 +43,25 @@ class FacebookController < ApplicationController
         params[:code],
         :redirect_uri => "#{@facebook_settings['callback_url']}", 
       )
-#      p access_token
-      session[:access_token_facebook] = access_token.token if access_token
+      p access_token
+      if access_token
+        session[:access_token_facebook] = {
+          :token => access_token.token,
+          :code => params[:code],
+          :expires_at => access_token.expires_at
+        }
+        p session[:access_token_facebook]
+      end
     end
     redirect_to facebook_path
+  end
+  
+  def refresh
+    access_token = @@client.web_server.get_access_token(
+      session[:access_token_facebook][:token],
+      :redirect_uri => "#{@facebook_settings['callback_url']}", 
+    )
+    session[:access_token_facebook] = access_token.token if access_token
   end
 
 
@@ -49,6 +70,18 @@ class FacebookController < ApplicationController
     # configからfacebookの設定情報を取得する
     def load_config_facebook
       @facebook_settings ||= load_config_oauth[Rails.env]['facebook']
+    end
+    
+    # いいね一覧を取得する
+    def get_likes
+      begin
+        access_token = OAuth2::AccessToken.new(@@client, session[:access_token_facebook][:token])
+        p access_token
+        access_token.get("/me/likes")
+      rescue
+        p "access token unuse!"
+        nil
+      end
     end
 
 end
