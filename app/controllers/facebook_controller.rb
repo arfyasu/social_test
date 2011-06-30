@@ -41,7 +41,7 @@ class FacebookController < ApplicationController
     if params[:code]
       access_token = @@client.web_server.get_access_token(
         params[:code],
-        :redirect_uri => "#{@facebook_settings['callback_url']}", 
+        :redirect_uri => "#{@facebook_settings['callback_url']}"
       )
       p access_token
       if access_token
@@ -59,7 +59,7 @@ class FacebookController < ApplicationController
   def refresh
     access_token = @@client.web_server.get_access_token(
       session[:access_token_facebook][:token],
-      :redirect_uri => "#{@facebook_settings['callback_url']}", 
+      :redirect_uri => "#{@facebook_settings['callback_url']}"
     )
     session[:access_token_facebook] = access_token.token if access_token
   end

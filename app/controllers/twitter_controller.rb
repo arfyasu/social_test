@@ -17,6 +17,7 @@ class TwitterController < ApplicationController
     if session[:access_token_twitter]
       response = @@consumer.request(
         :get,
+        '/account/verify_credentials.json',
         session[:access_token_twitter],
         { :scheme => :query_string }
       )
